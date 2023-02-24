@@ -39,7 +39,12 @@ public class MoveToLadder : MonoBehaviour {
         var target = movePoints[currentIndex];
 
         if(this.transform.position != target) {
-            this.transform.LookAt(target);
+            //  this.transform.LookAt(target);
+
+            Vector3 direction = target - this.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rotation, speed * Time.deltaTime);
+
             this.transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
             if(currentIndex == movePoints.Length - 1) {
